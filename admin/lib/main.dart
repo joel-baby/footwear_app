@@ -5,9 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: firebaseOptions);
+  FirebaseApp app = await Firebase.initializeApp(options: firebaseOptions);
+  print("Firebase Connected: ${app.name}");
   Get.put(HomeController());
   runApp(const MyApp());
 }

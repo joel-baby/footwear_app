@@ -29,6 +29,7 @@ class AddProductPage extends StatelessWidget {
                     ),
                   ),
                   TextField(
+                    controller: ctrl.productNameCtrl,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -39,6 +40,7 @@ class AddProductPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextField(
+                    controller: ctrl.productDescriptionCtrl,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -50,6 +52,7 @@ class AddProductPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextField(
+                    controller: ctrl.productImgCtrl,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -60,6 +63,7 @@ class AddProductPage extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextField(
+                    controller: ctrl.productPriceCtrl,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -73,19 +77,21 @@ class AddProductPage extends StatelessWidget {
                     children: [
                       Flexible(
                         child: DropDownBtn(
-                          items: ['Cate1', 'Cate2', 'Cate3'],
-                          selectedItemText: 'Category',
+                          items: ['Boots', 'Shoe', 'Beach Shoes', 'High heels'],
+                          selectedItemText: ctrl.category,
                           onSelected: (selectedValue) {
-                            print(selectedValue);
+                            ctrl.category = selectedValue ?? 'general';
+                            ctrl.update();
                           },
                         ),
                       ),
                       Flexible(
                         child: DropDownBtn(
-                          items: ['Brand1', 'Brand2', 'Brand3'],
-                          selectedItemText: 'Brand',
+                          items: ['Puma', 'Sketchers', 'Adidas', 'Clarks'],
+                          selectedItemText: ctrl.brand,
                           onSelected: (selectedValue) {
-                            print(selectedValue);
+                            ctrl.brand = selectedValue ?? 'un branded';
+                            ctrl.update();
                           },
                         ),
                       ),
@@ -96,9 +102,11 @@ class AddProductPage extends StatelessWidget {
                   SizedBox(height: 10),
                   DropDownBtn(
                     items: ['True', 'False'],
-                    selectedItemText: 'Offer ?',
+                    selectedItemText: ctrl.offer.toString(),
                     onSelected: (selectedValue) {
-                      print(selectedValue);
+                      ctrl.offer =
+                          bool.tryParse(selectedValue ?? 'false') ?? false;
+                      ctrl.update();
                     },
                   ),
                   SizedBox(height: 10),
@@ -107,7 +115,9 @@ class AddProductPage extends StatelessWidget {
                       backgroundColor: Colors.indigoAccent,
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      ctrl.addProduct();
+                    },
                     child: Text('Add product'),
                   ),
                 ],
