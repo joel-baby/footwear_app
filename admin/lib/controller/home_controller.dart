@@ -1,7 +1,6 @@
 import 'package:admin/model/product/product.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -22,10 +21,11 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     productCollection = firestore.collection('products');
+    fetchProducts();
     super.onInit();
   }
 
-  addProduct() {
+  addProduct() async {
     try {
       DocumentReference doc = productCollection.doc();
       Product product = Product(
@@ -39,7 +39,8 @@ class HomeController extends GetxController {
         offer: offer,
       );
       final productJson = product.toJson();
-      doc.set(productJson);
+      await doc.set(productJson);
+      await fetchProducts();
       Get.snackbar(
         'Success',
         'Product added successfully',
@@ -48,15 +49,39 @@ class HomeController extends GetxController {
       setValuesDefault();
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString(), colorText: Colors.red);
-      // TODO
     }
   }
 
   fetchProducts() async {
-    QuerySnapshot productSnapshot = await productCollection.get();
-    final List<Product> retrivedProducts = productSnapshot.docs
-        .map((doc) => Product.fromJson(doc.data() as Map<String, dynamic>))
-        .toList();
+    try {
+      QuerySnapshot productSnapshot = await productCollection.get();
+      final List<Product> retrivedProducts = productSnapshot.docs
+          .map((doc) => Product.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
+
+      products.clear();
+      products.assignAll(retrivedProducts);
+      Get.snackbar(
+        'Success',
+        'Product fetch successfully',
+        colorText: Colors.green,
+      );
+    } on Exception catch (e) {
+      Get.snackbar('Error', e.toString(), colorText: Colors.red);
+      print(e);
+    } finally {
+      update();
+    }
+  }
+
+  deleteProduct(String id) async {
+    try {
+      await productCollection.doc(id).delete();
+      fetchProducts();
+    } on Exception catch (e) {
+      Get.snackbar('Error', e.toString(), colorText: Colors.red);
+      print(e);
+    }
   }
 
   setValuesDefault() {

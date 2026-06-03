@@ -9,8 +9,6 @@ class AddProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      init: HomeController(),
-      initState: (_) {},
       builder: (ctrl) {
         return Scaffold(
           appBar: AppBar(title: Text('Add product')),

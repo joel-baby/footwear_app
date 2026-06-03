@@ -9,20 +9,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
-      init: HomeController(),
-      initState: (_) {},
       builder: (ctrl) {
         return Scaffold(
           appBar: AppBar(title: Text("Footwear admin")),
           body: ListView.builder(
-            itemCount: 10,
+            itemCount: ctrl.products.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text('title'),
-                subtitle: Text('Price : 100'),
+                title: Text(ctrl.products[index].name ?? ''),
+                subtitle: Text((ctrl.products[index].price ?? 0).toString()),
                 trailing: IconButton(
                   onPressed: () {
-                    print('delete');
+                    ctrl.deleteProduct(ctrl.products[index].id ?? '');
                   },
                   icon: Icon(Icons.delete),
                 ),
