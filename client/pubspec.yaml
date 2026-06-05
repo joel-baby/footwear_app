@@ -36,6 +36,13 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.3
   dropdown_button2: ^3.1.0
+  firebase_core: ^4.10.0
+  cloud_firestore: ^6.5.0
+  get_storage: ^2.1.1
+  json_annotation: ^4.12.0
+  build_runner: ^2.15.0
+  json_serializable: ^6.14.0
+  otp_text_field_v2: ^1.0.3
 
 dev_dependencies:
   flutter_test:

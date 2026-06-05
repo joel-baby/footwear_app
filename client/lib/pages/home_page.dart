@@ -1,4 +1,5 @@
 import 'package:client/pages/login_page.dart';
+import 'package:client/pages/product_description_page.dart';
 import 'package:client/widget/drop_down_btn.dart';
 import 'package:client/widget/multi_select_dropdown.dart';
 import 'package:client/widget/product_card.dart';
@@ -70,6 +71,14 @@ class HomePage extends StatelessWidget {
                       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                   price: 200,
                   offerTag: '30% off',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProductDescriptionPage(),
+                      ),
+                    );
+                  },
                 );
               },
             ),
