@@ -8,12 +8,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 void main() async {
-  await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseApp app = await Firebase.initializeApp(options: firebaseOptions);
   print("Firebase Connected: ${app.name}");
   Get.put(LoginController());
-  Get.put(HomeController());
   runApp(const MyApp());
 }
 
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: RegisterPage(),
     );
   }
 }
