@@ -61,6 +61,7 @@ class HomeController extends GetxController {
 
       products.clear();
       products.assignAll(retrivedProducts);
+      print("Products fetched: ${products.length}");
       Get.snackbar(
         'Success',
         'Product fetch successfully',
