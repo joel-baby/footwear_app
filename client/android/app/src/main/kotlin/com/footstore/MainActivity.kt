@@ -1,4 +1,4 @@
-package com.example.client
+package com.footstore.client
 
 import io.flutter.embedding.android.FlutterActivity
 

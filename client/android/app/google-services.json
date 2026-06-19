@@ -42,6 +42,25 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693196158808:android:e7f523d6ff594c9b4ed72d",
+        "android_client_info": {
+          "package_name": "com.footstore.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVA1b2L4JPCNwlQn26oqJmxCemTTbFvIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

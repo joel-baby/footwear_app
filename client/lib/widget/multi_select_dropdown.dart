@@ -1,11 +1,30 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class MultiSelectDropdown extends StatelessWidget {
+class MultiSelectDropdown extends StatefulWidget {
   final List<String> items;
-  final multiValueListenable = ValueNotifier<List<String>>([]);
+  final Function(List<String>) onSelectionChanged;
 
-  MultiSelectDropdown({super.key, required this.items});
+  const MultiSelectDropdown({
+    super.key,
+    required this.items,
+    required this.onSelectionChanged,
+  });
+
+  @override
+  State<MultiSelectDropdown> createState() => _MultiSelectDropdownState();
+}
+
+class _MultiSelectDropdownState extends State<MultiSelectDropdown> {
+  List<String> selectedItems = [];
+
+  String get dropdownText {
+    if (selectedItems.isEmpty) {
+      return 'Select Brands';
+    }
+
+    return selectedItems.join(', ');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,84 +33,77 @@ class MultiSelectDropdown extends StatelessWidget {
         child: DropdownButtonHideUnderline(
           child: DropdownButton2<String>(
             isExpanded: true,
+
             hint: Text(
-              'Select Items',
+              dropdownText,
               style: TextStyle(
                 fontSize: 14,
                 color: Theme.of(context).hintColor,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
-            items: items.map((item) {
-              return DropdownItem(
+
+            items: widget.items.map((item) {
+              return DropdownItem<String>(
                 value: item,
                 height: 40,
                 closeOnTap: false,
-                child: ValueListenableBuilder<List<String>>(
-                  valueListenable: multiValueListenable,
-                  builder: (context, multiValue, _) {
-                    final isSelected = multiValue.contains(item);
-                    return Container(
-                      height: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          if (isSelected)
-                            const Icon(Icons.check_box_outlined)
-                          else
-                            const Icon(Icons.check_box_outline_blank),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Text(
-                              item,
-                              style: const TextStyle(fontSize: 14),
+
+                child: StatefulBuilder(
+                  builder: (context, menuSetState) {
+                    final isSelected = selectedItems.contains(item);
+
+                    return InkWell(
+                      onTap: () {
+                        if (isSelected) {
+                          selectedItems.remove(item);
+                        } else {
+                          selectedItems.add(item);
+                        }
+
+                        setState(() {});
+                        menuSetState(() {});
+
+                        widget.onSelectionChanged(selectedItems);
+                      },
+
+                      child: Container(
+                        height: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+
+                        child: Row(
+                          children: [
+                            Icon(
+                              isSelected
+                                  ? Icons.check_box
+                                  : Icons.check_box_outline_blank,
                             ),
-                          ),
-                        ],
+
+                            const SizedBox(width: 16),
+
+                            Expanded(
+                              child: Text(
+                                item,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
               );
             }).toList(),
-            multiValueListenable: multiValueListenable,
-            onChanged: (value) {
-              final multiValue = multiValueListenable.value;
-              final isSelected = multiValue.contains(value);
-              if (value == 'All') {
-                isSelected
-                    ? multiValueListenable.value = []
-                    : multiValueListenable.value = List.from(items);
-              } else {
-                multiValueListenable.value = isSelected
-                    ? ([...multiValue]..remove(value))
-                    : [...multiValue, value!];
-              }
-            },
-            selectedItemBuilder: (context) {
-              return items.map((item) {
-                return ValueListenableBuilder<List<String>>(
-                  valueListenable: multiValueListenable,
-                  builder: (context, multiValue, _) {
-                    return Container(
-                      alignment: AlignmentDirectional.center,
-                      child: Text(
-                        multiValue.where((item) => item != 'All').join(', '),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        maxLines: 1,
-                      ),
-                    );
-                  },
-                );
-              }).toList();
-            },
+
+            onChanged: (value) {},
+
             buttonStyleData: const ButtonStyleData(
               padding: EdgeInsets.only(left: 16, right: 8),
               height: 40,
-              width: 140,
+              width: 180,
             ),
+
             menuItemStyleData: const MenuItemStyleData(
               padding: EdgeInsets.zero,
             ),

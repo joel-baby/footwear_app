@@ -29,7 +29,6 @@ class RegisterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  keyboardType: TextInputType.phone,
                   controller: ctrl.registerNameCtrl,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(

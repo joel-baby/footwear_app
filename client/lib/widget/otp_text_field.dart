@@ -26,7 +26,6 @@ class OtpTextField extends StatelessWidget {
         outlineBorderRadius: 15,
         style: TextStyle(fontSize: 17),
         onChanged: (pin) {
-          print("Changed: " + pin);
         },
         onCompleted: (pin) {
           onComplete(pin);

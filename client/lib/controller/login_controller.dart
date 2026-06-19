@@ -72,7 +72,6 @@ class LoginController extends GetxController {
 
       final random = Random();
       int otp = 1000 + random.nextInt(9000);
-      print(otp);
       Get.snackbar('Success', 'Your otp is $otp', colorText: Colors.green);
       otpFieldShow = true;
       otpSend = otp;
@@ -93,16 +92,16 @@ class LoginController extends GetxController {
       if (querySnapshot.docs.isNotEmpty) {
         var userDoc = querySnapshot.docs.first;
         var userData = userDoc.data() as Map<String, dynamic>;
+
+        loginUser = UserModel.fromJson(userData);
+
         box.write('LoginUser', userData);
+
         loginNumberCtrl.clear();
-        Get.to(HomePage());
+
+        Get.offAll(() => HomePage());
+
         Get.snackbar('Success', 'Login successful', colorText: Colors.green);
-      } else {
-        Get.snackbar(
-          'Error',
-          'User not found, Please register',
-          colorText: Colors.red,
-        );
       }
     } else {
       Get.snackbar(
