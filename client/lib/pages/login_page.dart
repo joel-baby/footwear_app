@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
               children: [
                 Text(
                   'Welcome Back',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.deepPurple,
@@ -34,7 +34,7 @@ class LoginPage extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    prefixIcon: Icon(Icons.phone_android),
+                    prefixIcon: const Icon(Icons.phone_android),
                     labelText: 'Phone Number',
                     hintText: 'Enter your phone number',
                   ),

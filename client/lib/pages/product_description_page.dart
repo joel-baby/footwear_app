@@ -13,7 +13,7 @@ class ProductDescriptionPage extends StatelessWidget {
       builder: (ctrl) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               'Product details',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),

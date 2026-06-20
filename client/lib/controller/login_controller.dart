@@ -36,6 +36,14 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    registerNameCtrl.dispose();
+    registerNumberCtrl.dispose();
+    loginNumberCtrl.dispose();
+    super.onClose();
+  }
+
   addUser() async {
     try {
       if (otpSend == otpEntered) {
@@ -47,6 +55,11 @@ class LoginController extends GetxController {
         );
         final userJson = user.toJson();
         await doc.set(userJson);
+
+        // Update loginUser with the newly registered user
+        loginUser = user;
+        box.write('LoginUser', userJson);
+
         Get.snackbar(
           'Success',
           'User added successfully',
@@ -55,6 +68,10 @@ class LoginController extends GetxController {
         registerNameCtrl.clear();
         registerNumberCtrl.clear();
         otpController.clear();
+        otpFieldShow = false;
+
+        // Auto-login the new user
+        Get.offAll(() => HomePage());
       } else {
         Get.snackbar('Error', 'OTP is incorrect', colorText: Colors.red);
       }
@@ -75,8 +92,6 @@ class LoginController extends GetxController {
       Get.snackbar('Success', 'Your otp is $otp', colorText: Colors.green);
       otpFieldShow = true;
       otpSend = otp;
-    } on Exception catch (e) {
-      print(e);
     } finally {
       update();
     }
@@ -98,6 +113,8 @@ class LoginController extends GetxController {
         box.write('LoginUser', userData);
 
         loginNumberCtrl.clear();
+
+        update(); // Notify UI of state change
 
         Get.offAll(() => HomePage());
 

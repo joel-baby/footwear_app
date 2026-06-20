@@ -63,7 +63,6 @@ class HomeController extends GetxController {
       productCategories.assignAll(retrivedCategories);
     } on Exception catch (e) {
       Get.snackbar('Error', e.toString(), colorText: Colors.red);
-      print(e);
     } finally {
       update();
     }

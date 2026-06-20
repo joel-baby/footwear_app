@@ -21,7 +21,7 @@ class RegisterPage extends StatelessWidget {
               children: [
                 Text(
                   'Create Your Account !!',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.deepPurple,
@@ -34,8 +34,8 @@ class RegisterPage extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    prefixIcon: Icon(Icons.phone_android),
-                    label: Text('Your Name'),
+                    prefixIcon: const Icon(Icons.phone_android),
+                    label: const Text('Your Name'),
                     hintText: 'Enter Your Name',
                   ),
                 ),

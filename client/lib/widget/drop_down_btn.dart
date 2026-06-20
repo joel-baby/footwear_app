@@ -1,8 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-String? selectedValue;
-
 class DropDownBtn extends StatelessWidget {
   final List<String> items;
   final String selectedItemText;

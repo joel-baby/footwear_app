@@ -3,7 +3,6 @@ import 'package:client/model/user/user_model.dart';
 import 'package:client/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -21,6 +20,12 @@ class PurchaseController extends GetxController {
   void onInit() {
     orderCollection = firestore.collection('orders');
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    addressController.dispose();
+    super.onClose();
   }
 
   submitOrder({
@@ -83,7 +88,7 @@ class PurchaseController extends GetxController {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    Get.snackbar('Error', '$response.message', colorText: Colors.red);
+    Get.snackbar('Error', '${response.message}', colorText: Colors.red);
   }
 
   void showOrderSuccessDailog(String orderId) {
@@ -92,7 +97,7 @@ class PurchaseController extends GetxController {
       content: Text('Your order Id is $orderId'),
       confirm: ElevatedButton(
         onPressed: () {
-          Get.off(HomePage());
+          Get.offAll(HomePage());
         },
         child: Text('Close'),
       ),
